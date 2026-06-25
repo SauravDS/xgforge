@@ -6,6 +6,7 @@ import {
   useRouter,
   HeadContent,
   Scripts,
+  useRouterState,
 } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 
@@ -130,11 +131,38 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function NavigationProgressBar() {
+  const isLoading = useRouterState({ select: (s) => s.isLoading });
+  if (!isLoading) return null;
+  return (
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        height: "2px",
+        zIndex: 9999,
+        background: "linear-gradient(90deg, hsl(var(--primary)) 0%, hsl(var(--primary)/0.6) 100%)",
+        animation: "nav-progress 1.5s ease-in-out infinite",
+      }}
+    />
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
+      <style>{`
+        @keyframes nav-progress {
+          0%   { transform: scaleX(0.05); transform-origin: left; opacity: 1; }
+          50%  { transform: scaleX(0.7);  transform-origin: left; opacity: 1; }
+          100% { transform: scaleX(1);    transform-origin: left; opacity: 0; }
+        }
+      `}</style>
+      <NavigationProgressBar />
       {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
       <Outlet />
       <SiteFooter />
