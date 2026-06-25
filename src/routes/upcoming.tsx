@@ -28,7 +28,7 @@ export const Route = createFileRoute("/upcoming")({
     links: [{ rel: "canonical", href: "/upcoming" }],
   }),
   loader: ({ context }) => {
-    context.queryClient.prefetchQuery(upcomingListQueryOptions);
+    return context.queryClient.prefetchQuery(upcomingListQueryOptions);
   },
   component: UpcomingPage,
 });

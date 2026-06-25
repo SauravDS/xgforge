@@ -46,8 +46,10 @@ export const Route = createFileRoute("/")({
   }),
   // Kick off both fetches during navigation, before the component mounts.
   loader: ({ context: { queryClient } }) => {
-    queryClient.prefetchQuery(homeMiniQueryOptions);
-    queryClient.prefetchQuery(homeBundleQueryOptions);
+    return Promise.all([
+      queryClient.prefetchQuery(homeMiniQueryOptions),
+      queryClient.prefetchQuery(homeBundleQueryOptions),
+    ]);
   },
   component: Home,
 });

@@ -27,7 +27,7 @@ export const Route = createFileRoute("/series/")({
     links: [{ rel: "canonical", href: "/series" }],
   }),
   loader: ({ context }) => {
-    context.queryClient.prefetchQuery(seriesIndexQueryOptions);
+    return context.queryClient.prefetchQuery(seriesIndexQueryOptions);
   },
   component: SeriesIndex,
 });

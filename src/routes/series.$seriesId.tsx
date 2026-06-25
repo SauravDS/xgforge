@@ -32,7 +32,7 @@ export const Route = createFileRoute("/series/$seriesId")({
   loader: ({ context, params }) => {
     const leagueId = Number(params.seriesId);
     if (Number.isFinite(leagueId)) {
-      context.queryClient.prefetchQuery(seriesViewQueryOptions(leagueId));
+      return context.queryClient.prefetchQuery(seriesViewQueryOptions(leagueId));
     }
   },
   component: SeriesDetail,

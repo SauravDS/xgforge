@@ -112,7 +112,7 @@ export const Route = createFileRoute("/match/$eventId")({
   loader: ({ context: { queryClient }, params }) => {
     const id = Number(params.eventId);
     if (Number.isFinite(id)) {
-      queryClient.prefetchQuery(matchQueryOptions(id));
+      return queryClient.prefetchQuery(matchQueryOptions(id));
     }
   },
   component: MatchPage,

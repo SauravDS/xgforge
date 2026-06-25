@@ -28,7 +28,7 @@ export const Route = createFileRoute("/recent")({
     links: [{ rel: "canonical", href: "/recent" }],
   }),
   loader: ({ context }) => {
-    context.queryClient.prefetchQuery(recentListQueryOptions);
+    return context.queryClient.prefetchQuery(recentListQueryOptions);
   },
   component: RecentPage,
 });

@@ -28,7 +28,7 @@ export const Route = createFileRoute("/live")({
     links: [{ rel: "canonical", href: "/live" }],
   }),
   loader: ({ context }) => {
-    context.queryClient.prefetchQuery(liveListQueryOptions);
+    return context.queryClient.prefetchQuery(liveListQueryOptions);
   },
   component: LivePage,
 });
