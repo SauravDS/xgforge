@@ -1,0 +1,107 @@
+import { useQuery } from "@tanstack/react-query";
+import { Link, createFileRoute } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
+import { useState } from "react";
+import { ArrowLeft } from "lucide-react";
+
+import { SiteHeader } from "@/components/SiteHeader";
+import { LeagueFilter } from "@/components/home/LeagueFilter";
+import { LiveCard } from "@/components/home/LiveCard";
+import { getHomeEnrichments } from "@/lib/home-enrichments.functions";
+import { liveListQueryOptions } from "@/lib/list-queries";
+
+export const Route = createFileRoute("/live")({
+  head: () => ({
+    meta: [
+      { title: "Live matches — xG Forge" },
+      {
+        name: "description",
+        content: "Every live football match right now, ranked by popularity and xG.",
+      },
+      { property: "og:title", content: "Live matches — xG Forge" },
+      {
+        property: "og:description",
+        content: "All live football fixtures, ranked by popularity.",
+      },
+      { property: "og:url", content: "/live" },
+    ],
+    links: [{ rel: "canonical", href: "/live" }],
+  }),
+  loader: ({ context }) => {
+    context.queryClient.prefetchQuery(liveListQueryOptions);
+  },
+  component: LivePage,
+});
+
+function LivePage() {
+  const q = useQuery({
+    ...liveListQueryOptions,
+    refetchInterval: 30_000,
+  });
+  const events = q.data?.events ?? [];
+
+
+  const fetchEnrich = useServerFn(getHomeEnrichments);
+  const enr = useQuery({
+    enabled: events.length > 0,
+    queryKey: ["live-page-enr", events.map((e) => e.id).join(",")],
+    queryFn: () =>
+      fetchEnrich({
+        data: {
+          upcomingIds: [],
+          recentIds: [],
+          liveIds: events.slice(0, 24).map((e) => e.id),
+          leagueIds: [],
+          eventTeams: events.slice(0, 24).map((e) => ({
+            id: e.id,
+            home: e.home_team_id,
+            away: e.away_team_id,
+          })),
+        },
+      }),
+    staleTime: 30_000,
+    refetchInterval: 30_000,
+  });
+  const enrEvents = enr.data?.events ?? {};
+
+  const [league, setLeague] = useState<number | null>(null);
+  const filtered = league === null ? events : events.filter((e) => e.league_id === league);
+
+  return (
+    <div className="min-h-screen bg-background text-foreground">
+      <SiteHeader />
+      <main className="mx-auto max-w-7xl px-3 sm:px-4 py-5 sm:py-8 space-y-6">
+        <Link
+          to="/"
+          className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.18em] text-muted-foreground hover:text-foreground"
+        >
+          <ArrowLeft className="h-3 w-3" /> Home
+        </Link>
+        <header>
+          <div className="text-[10px] uppercase tracking-[0.22em] text-live mb-2">In play</div>
+          <h1 className="font-display text-3xl sm:text-5xl leading-none">Live matches</h1>
+        </header>
+
+        <div className="-mx-3 sm:mx-0 px-3 sm:px-0 overflow-x-auto no-scrollbar">
+          <div className="min-w-max sm:min-w-0">
+            <LeagueFilter events={events} value={league} onChange={setLeague} />
+          </div>
+        </div>
+
+        {q.isLoading ? (
+          <div className="text-sm text-muted-foreground">Loading…</div>
+        ) : filtered.length === 0 ? (
+          <div className="rounded-md border border-dashed border-border/60 bg-card/40 p-10 text-center text-sm text-muted-foreground">
+            {events.length === 0 ? "No matches live right now." : "No matches for this league."}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3">
+            {filtered.map((ev) => (
+              <LiveCard key={ev.id} ev={ev} enr={enrEvents[String(ev.id)]} />
+            ))}
+          </div>
+        )}
+      </main>
+    </div>
+  );
+}
