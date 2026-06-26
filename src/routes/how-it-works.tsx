@@ -11,13 +11,17 @@ export const Route = createFileRoute("/how-it-works")({
         content:
           "How xG Forge Rank works: per-90 xG scoring, opponent-adjusted form, team momentum, market priors and Monte Carlo match simulation.",
       },
-      { property: "og:title", content: "xG Forge methodology" },
+      { property: "og:title", content: "Methodology — xG Forge" },
       {
         property: "og:description",
         content:
-          "Per-90 xG scoring, opponent-adjusted form, market priors and 5,000-run Monte Carlo simulation.",
+          "How xG Forge Rank works: per-90 xG scoring, opponent-adjusted form, team momentum, market priors and Monte Carlo match simulation.",
       },
+      { property: "og:url", content: "https://xgforge.in/how-it-works" },
+      { name: "twitter:title", content: "Methodology — xG Forge" },
+      { name: "twitter:description", content: "How xG Forge Rank works: per-90 xG scoring, opponent-adjusted form, team momentum, market priors and Monte Carlo match simulation." },
     ],
+    links: [{ rel: "canonical", href: "https://xgforge.in/how-it-works" }],
   }),
   component: HowItWorks,
 });

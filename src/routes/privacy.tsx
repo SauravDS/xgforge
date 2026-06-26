@@ -15,10 +15,13 @@ export const Route = createFileRoute("/privacy")({
       {
         property: "og:description",
         content:
-          "A short, honest privacy policy for xG Forge: what we collect, how we use it, and your rights.",
+          "How xG Forge collects, uses, and protects information when you use the football analytics platform.",
       },
+      { property: "og:url", content: "https://xgforge.in/privacy" },
+      { name: "twitter:title", content: "Privacy Policy — xG Forge" },
+      { name: "twitter:description", content: "How xG Forge collects, uses, and protects information when you use the football analytics platform." },
     ],
-    links: [{ rel: "canonical", href: "/privacy" }],
+    links: [{ rel: "canonical", href: "https://xgforge.in/privacy" }],
   }),
   component: PrivacyPage,
 });

@@ -11,20 +11,21 @@ import { seriesIndexQueryOptions } from "@/lib/list-queries";
 export const Route = createFileRoute("/series/")({
   head: () => ({
     meta: [
-      { title: "Series — xG Forge" },
+      { title: "Football Competitions & Leagues — xG Forge" },
       {
         name: "description",
-        content:
-          "Ongoing football competitions — international tournaments and country-by-country leagues.",
+        content: "Browse live data, standings, and upcoming fixtures for premier football leagues and international tournaments.",
       },
-      { property: "og:title", content: "Series — xG Forge" },
+      { property: "og:title", content: "Football Competitions & Leagues — xG Forge" },
       {
         property: "og:description",
-        content: "Browse every ongoing football competition.",
+        content: "Browse live data, standings, and upcoming fixtures for premier football leagues and international tournaments.",
       },
-      { property: "og:url", content: "/series" },
+      { property: "og:url", content: "https://xgforge.in/series" },
+      { name: "twitter:title", content: "Football Competitions & Leagues — xG Forge" },
+      { name: "twitter:description", content: "Browse live data, standings, and upcoming fixtures for premier football leagues and international tournaments." },
     ],
-    links: [{ rel: "canonical", href: "/series" }],
+    links: [{ rel: "canonical", href: "https://xgforge.in/series" }],
   }),
   loader: ({ context }) => {
     return context.queryClient.prefetchQuery(seriesIndexQueryOptions);

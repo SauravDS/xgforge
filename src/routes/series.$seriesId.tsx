@@ -13,26 +13,28 @@ import { getHomeEnrichments } from "@/lib/home-enrichments.functions";
 import { seriesViewQueryOptions } from "@/lib/list-queries";
 
 export const Route = createFileRoute("/series/$seriesId")({
-  head: ({ params }) => ({
-    meta: [
-      { title: `Series — xG Forge` },
-      {
-        name: "description",
-        content: "Live, upcoming and recent fixtures for this competition.",
-      },
-      { property: "og:title", content: `Series — xG Forge` },
-      {
-        property: "og:description",
-        content: "Live, upcoming and recent fixtures for this competition.",
-      },
-      { property: "og:url", content: `/series/${params.seriesId}` },
-    ],
-    links: [{ rel: "canonical", href: `/series/${params.seriesId}` }],
-  }),
-  loader: ({ context, params }) => {
+  head: ({ loaderData, params }) => {
+    // @ts-ignore - loaderData type is inferred from loader
+    const seriesName = loaderData?.league?.name ?? "Series";
+    const title = `${seriesName} Fixtures & Standings — xG Forge`;
+    const description = `Live scores, upcoming fixtures, and table standings for the ${seriesName}.`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: `https://xgforge.in/series/${params.seriesId}` },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+      ],
+      links: [{ rel: "canonical", href: `https://xgforge.in/series/${params.seriesId}` }],
+    };
+  },
+  loader: async ({ context, params }) => {
     const leagueId = Number(params.seriesId);
     if (Number.isFinite(leagueId)) {
-      return context.queryClient.prefetchQuery(seriesViewQueryOptions(leagueId));
+      return await context.queryClient.ensureQueryData(seriesViewQueryOptions(leagueId));
     }
   },
   component: SeriesDetail,

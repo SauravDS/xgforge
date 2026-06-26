@@ -13,19 +13,21 @@ import { recentListQueryOptions } from "@/lib/list-queries";
 export const Route = createFileRoute("/recent")({
   head: () => ({
     meta: [
-      { title: "Recent results — xG Forge" },
+      { title: "Recent Results & Match Analytics — xG Forge" },
       {
         name: "description",
-        content: "Finished football matches in the last 48 hours, with xG over/under-performance.",
+        content: "Post-match analytics, xG timelines, and shot maps for recently finished football matches.",
       },
-      { property: "og:title", content: "Recent results — xG Forge" },
+      { property: "og:title", content: "Recent Results & Match Analytics — xG Forge" },
       {
         property: "og:description",
-        content: "All finished football matches in the last 48 hours.",
+        content: "Post-match analytics, xG timelines, and shot maps for recently finished football matches.",
       },
-      { property: "og:url", content: "/recent" },
+      { property: "og:url", content: "https://xgforge.in/recent" },
+      { name: "twitter:title", content: "Recent Results & Match Analytics — xG Forge" },
+      { name: "twitter:description", content: "Post-match analytics, xG timelines, and shot maps for recently finished football matches." },
     ],
-    links: [{ rel: "canonical", href: "/recent" }],
+    links: [{ rel: "canonical", href: "https://xgforge.in/recent" }],
   }),
   loader: ({ context }) => {
     return context.queryClient.prefetchQuery(recentListQueryOptions);

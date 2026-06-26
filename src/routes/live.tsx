@@ -13,19 +13,21 @@ import { liveListQueryOptions } from "@/lib/list-queries";
 export const Route = createFileRoute("/live")({
   head: () => ({
     meta: [
-      { title: "Live matches — xG Forge" },
+      { title: "Live Matches & In-Play xG — xG Forge" },
       {
         name: "description",
-        content: "Every live football match right now, ranked by popularity and xG.",
+        content: "Follow every live football fixture with real-time xG, momentum shifts, and win probability updates.",
       },
-      { property: "og:title", content: "Live matches — xG Forge" },
+      { property: "og:title", content: "Live Matches & In-Play xG — xG Forge" },
       {
         property: "og:description",
-        content: "All live football fixtures, ranked by popularity.",
+        content: "Follow every live football fixture with real-time xG, momentum shifts, and win probability updates.",
       },
-      { property: "og:url", content: "/live" },
+      { property: "og:url", content: "https://xgforge.in/live" },
+      { name: "twitter:title", content: "Live Matches & In-Play xG — xG Forge" },
+      { name: "twitter:description", content: "Follow every live football fixture with real-time xG, momentum shifts, and win probability updates." },
     ],
-    links: [{ rel: "canonical", href: "/live" }],
+    links: [{ rel: "canonical", href: "https://xgforge.in/live" }],
   }),
   loader: ({ context }) => {
     return context.queryClient.prefetchQuery(liveListQueryOptions);

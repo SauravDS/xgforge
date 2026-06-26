@@ -15,10 +15,13 @@ export const Route = createFileRoute("/terms")({
       {
         property: "og:description",
         content:
-          "Acceptable use, data accuracy disclaimer, and limitation of liability for xG Forge.",
+          "The terms that govern your use of xG Forge — a scientific football analytics platform. Read before relying on any number on the site.",
       },
+      { property: "og:url", content: "https://xgforge.in/terms" },
+      { name: "twitter:title", content: "Terms of Use — xG Forge" },
+      { name: "twitter:description", content: "The terms that govern your use of xG Forge — a scientific football analytics platform. Read before relying on any number on the site." },
     ],
-    links: [{ rel: "canonical", href: "/terms" }],
+    links: [{ rel: "canonical", href: "https://xgforge.in/terms" }],
   }),
   component: TermsPage,
 });

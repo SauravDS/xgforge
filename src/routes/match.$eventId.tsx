@@ -98,21 +98,31 @@ const matchQueryOptions = (eventId: number) =>
   });
 
 export const Route = createFileRoute("/match/$eventId")({
-  head: () => ({
-    meta: [
-      { title: "Match — xG Forge" },
-      {
-        name: "description",
-        content:
-          "xG Forge Rank Top 11, live xG progression, post-match analytics and match simulator for every fixture.",
-      },
-    ],
-  }),
+  head: ({ loaderData, params }) => {
+    // @ts-ignore - loaderData type is inferred from loader
+    const home = loaderData?.event?.home_team ?? "Home";
+    // @ts-ignore
+    const away = loaderData?.event?.away_team ?? "Away";
+    const title = `${home} vs ${away} | Live xG & Stats — xG Forge`;
+    const description = `Live xG, match simulations, and player rankings for ${home} vs ${away}.`;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:url", content: `https://xgforge.in/match/${params.eventId}` },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+      ],
+      links: [{ rel: "canonical", href: `https://xgforge.in/match/${params.eventId}` }],
+    };
+  },
   // Fire the full data bundle fetch during navigation, before component mount.
-  loader: ({ context: { queryClient }, params }) => {
+  loader: async ({ context: { queryClient }, params }) => {
     const id = Number(params.eventId);
     if (Number.isFinite(id)) {
-      return queryClient.prefetchQuery(matchQueryOptions(id));
+      return await queryClient.ensureQueryData(matchQueryOptions(id));
     }
   },
   component: MatchPage,

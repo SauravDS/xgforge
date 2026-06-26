@@ -13,19 +13,21 @@ import { upcomingListQueryOptions } from "@/lib/list-queries";
 export const Route = createFileRoute("/upcoming")({
   head: () => ({
     meta: [
-      { title: "Upcoming fixtures — xG Forge" },
+      { title: "Upcoming Fixtures & Predictions — xG Forge" },
       {
         name: "description",
-        content: "Football fixtures kicking off in the next 48 hours, ranked by popularity.",
+        content: "Match predictions, Monte Carlo simulations, and odds-vs-model comparisons for upcoming football fixtures.",
       },
-      { property: "og:title", content: "Upcoming fixtures — xG Forge" },
+      { property: "og:title", content: "Upcoming Fixtures & Predictions — xG Forge" },
       {
         property: "og:description",
-        content: "All football fixtures in the next 48 hours.",
+        content: "Match predictions, Monte Carlo simulations, and odds-vs-model comparisons for upcoming football fixtures.",
       },
-      { property: "og:url", content: "/upcoming" },
+      { property: "og:url", content: "https://xgforge.in/upcoming" },
+      { name: "twitter:title", content: "Upcoming Fixtures & Predictions — xG Forge" },
+      { name: "twitter:description", content: "Match predictions, Monte Carlo simulations, and odds-vs-model comparisons for upcoming football fixtures." },
     ],
-    links: [{ rel: "canonical", href: "/upcoming" }],
+    links: [{ rel: "canonical", href: "https://xgforge.in/upcoming" }],
   }),
   loader: ({ context }) => {
     return context.queryClient.prefetchQuery(upcomingListQueryOptions);

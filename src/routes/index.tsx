@@ -30,19 +30,23 @@ const homeBundleQueryOptions = queryOptions({
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "xG Forge — Football intelligence" },
+      { title: "xG Forge — Football intelligence & Live xG" },
       {
         name: "description",
         content:
-          "Live xG, ranked squads, Monte Carlo match simulation and market-edge insight across the world's premier leagues.",
+          "Scientific football analytics: live expected goals (xG), match simulations, player rankings, and market-edge insights.",
       },
-      { property: "og:title", content: "xG Forge — Football intelligence" },
+      { property: "og:title", content: "xG Forge — Football intelligence & Live xG" },
       {
         property: "og:description",
         content:
-          "Scientific football analytics: live xG, xG Forge Rank, market vs model edge.",
+          "Scientific football analytics: live expected goals (xG), match simulations, player rankings, and market-edge insights.",
       },
+      { property: "og:url", content: "https://xgforge.in/" },
+      { name: "twitter:title", content: "xG Forge — Football intelligence & Live xG" },
+      { name: "twitter:description", content: "Scientific football analytics: live expected goals (xG), match simulations, player rankings, and market-edge insights." },
     ],
+    links: [{ rel: "canonical", href: "https://xgforge.in/" }],
   }),
   // Kick off both fetches during navigation, before the component mounts.
   loader: ({ context: { queryClient } }) => {

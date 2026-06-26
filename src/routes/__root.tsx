@@ -80,12 +80,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { name: "color-scheme", content: "dark" },
+      { name: "theme-color", content: "#292929" },
       { title: "xG Forge — Football intelligence" },
       {
         name: "description",
         content:
           "xG Forge is a scientific football analytics platform: live xG, player ranking, match simulation, and market-edge insight across the world's premier leagues.",
       },
+      { property: "og:site_name", content: "xG Forge" },
       { property: "og:title", content: "xG Forge — Football intelligence" },
       {
         property: "og:description",

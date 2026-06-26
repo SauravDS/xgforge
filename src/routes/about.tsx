@@ -16,11 +16,13 @@ export const Route = createFileRoute("/about")({
       {
         property: "og:description",
         content:
-          "Football, in numbers you can trust. Live xG, ranked squads, simulated outcomes, and market-vs-model views.",
+          "xG Forge is a live football intelligence platform: live xG, ranked squads, win probabilities, simulated outcomes, and market-vs-model views in one place.",
       },
-      { property: "og:url", content: "/about" },
+      { property: "og:url", content: "https://xgforge.in/about" },
+      { name: "twitter:title", content: "About — xG Forge" },
+      { name: "twitter:description", content: "xG Forge is a live football intelligence platform: live xG, ranked squads, win probabilities, simulated outcomes, and market-vs-model views in one place." },
     ],
-    links: [{ rel: "canonical", href: "/about" }],
+    links: [{ rel: "canonical", href: "https://xgforge.in/about" }],
   }),
   component: AboutPage,
 });
