@@ -11,7 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
+import { reportError } from "../lib/error-reporting";
 import { SiteFooter } from "../components/SiteFooter";
 
 function NotFoundComponent() {
@@ -40,7 +40,7 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
+    reportError(error, { boundary: "root_error_boundary" });
   }, [error]);
 
   return (
@@ -95,11 +95,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "xG Forge — Football intelligence" },
-      { name: "description", content: "Dream Team Genius provides AI-powered football team suggestions for 4-member contests." },
-      { property: "og:description", content: "Dream Team Genius provides AI-powered football team suggestions for 4-member contests." },
-      { name: "twitter:description", content: "Dream Team Genius provides AI-powered football team suggestions for 4-member contests." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8617d557-51b8-4dec-948d-71ae475d5f93/id-preview-43303fdd--81e760c6-81d2-4b00-8931-90b6f58c8b0a.lovable.app-1782266102855.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/8617d557-51b8-4dec-948d-71ae475d5f93/id-preview-43303fdd--81e760c6-81d2-4b00-8931-90b6f58c8b0a.lovable.app-1782266102855.png" },
+      { name: "twitter:description", content: "Live xG, ranked squads, Monte Carlo match simulation, and market vs model edge across the world's premier leagues." },
+      { property: "og:image", content: "https://xgforge.in/og-image.png" },
+      { name: "twitter:image", content: "https://xgforge.in/og-image.png" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },

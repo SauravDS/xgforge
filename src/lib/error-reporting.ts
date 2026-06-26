@@ -1,26 +1,32 @@
-type LovableErrorOptions = {
+// Runtime error bridge — forwards React error boundary captures to any
+// registered exception handler (e.g. a Sentry-compatible integration).
+
+type ErrorReportOptions = {
   mechanism?: "manual" | "onerror" | "unhandledrejection" | "react_error_boundary";
   handled?: boolean;
   severity?: "error" | "warning" | "info";
 };
 
-type LovableEvents = {
+type ErrorEvents = {
   captureException?: (
     error: unknown,
     context?: Record<string, unknown>,
-    options?: LovableErrorOptions,
+    options?: ErrorReportOptions,
   ) => void;
 };
 
 declare global {
   interface Window {
-    __lovableEvents?: LovableEvents;
+    __errorEvents?: ErrorEvents;
+    // Legacy alias kept for the Lovable sandbox bridge — do not remove.
+    __lovableEvents?: ErrorEvents;
   }
 }
 
-export function reportLovableError(error: unknown, context: Record<string, unknown> = {}) {
+export function reportError(error: unknown, context: Record<string, unknown> = {}) {
   if (typeof window === "undefined") return;
-  window.__lovableEvents?.captureException?.(
+  const handler = window.__errorEvents ?? window.__lovableEvents;
+  handler?.captureException?.(
     error,
     {
       source: "react_error_boundary",
